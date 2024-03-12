@@ -19,14 +19,11 @@ const InputView = (props) => {
 
     const handleFocus = () => {
         setIsFocused(true);
-        // console.log(isFocused);
     };
 
     const handleBlur = () => {
         setIsFocused(false);
-        // console.log(isFocused);
     };
-    // console.log(hidePassword);
 
     useEffect(() => {
         if (hidePassword !== undefined && hidePassword !== null) {
@@ -59,20 +56,20 @@ const InputView = (props) => {
                 style={styles.input}
                 secureTextEntry={hide}
             />
-                {hide != null && (
-                    <View>
-                        {hide ? (
-                            <TouchableOpacity onPress={hideShow}>
-                                <Image source={require('../../../assest/icons/hidePassword.png')} style={styles.showPassword} />
-                            </TouchableOpacity>
-                        ) : (
-                            <TouchableOpacity onPress={hideShow}>
-                                <Image source={require('../../../assest/icons/showPassword.png')} style={styles.showPassword} />
-                            </TouchableOpacity>
-                        )}
-                    </View>
-                )}
-            
+            {hide != null && (
+                <View>
+                    {hide ? (
+                        <TouchableOpacity onPress={hideShow}>
+                            <Image source={require('../../assest/icons/hidePassword.png')} style={styles.showPassword} />
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity onPress={hideShow}>
+                            <Image source={require('../../assest/icons/showPassword.png')} style={styles.showPassword} />
+                        </TouchableOpacity>
+                    )}
+                </View>
+            )}
+
         </View>
     );
 }

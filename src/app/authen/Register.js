@@ -17,7 +17,7 @@ const Register = (props) => {
         <KeyboardAwareScrollView>
             <View style={styles.container}>
                 <StatusBar hidden={true} />
-                <Image source={require('../../../assest/images/background_register.png')} style={styles.imgHeader} />
+                <Image source={require('../../assest/images/background_register.png')} style={styles.imgHeader} />
                 <Text style={styles.txtHeader}>Đăng ký</Text>
                 <Text style={styles.txtHeader1}>Tạo tài khoản</Text>
                 <View style={styles.inputContainer}>
@@ -71,11 +71,11 @@ const Register = (props) => {
 
                 <View style={styles.loginOtherContainer}>
                     <TouchableOpacity style={styles.btnGoogle}>
-                        <Image source={require('../../../assest/icons/google.png')}
+                        <Image source={require('../../assest/icons/google.png')}
                             style={styles.imgGoogle} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.btnFacebook}>
-                        <Image source={require('../../../assest/icons/facebook.png')}
+                        <Image source={require('../../assest/icons/facebook.png')}
                             style={styles.imgFacebook} />
                     </TouchableOpacity>
                 </View>

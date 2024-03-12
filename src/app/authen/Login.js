@@ -6,6 +6,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import InputView from '../multiComponent/InputView';
 import ButtonBig from '../multiComponent/ButtonBig';
+
+import AxiosInstance from '../api/AxiosInstance';
+
 const Login = (props) => {
     const { navigation } = props;
     const { isLogin, setIsLogin } = useContext(AppContext);
@@ -13,15 +16,29 @@ const Login = (props) => {
     const [password, setPassword] = useState('');
     const [rememnerMe, setRememberMe] = useState(false);
     const [loginFailed, setLoginFailed] = useState(false);
+    const [logFailedLogin, setLogFailedLogin] = useState('');
     const changeRemember = () => {
         setRememberMe(!rememnerMe);
     };
+
+    const loginApi = async () => {
+        const response = await AxiosInstance().get('/users/login?email=' + email + '&&password=' + password);
+        console.log(response);
+        if (response.status === 200) {
+            if (response.user) setIsLogin(true);
+        } else {
+            setLoginFailed(true);
+            setLogFailedLogin(response.msg);
+        }
+    }
+
+
     return (
         <KeyboardAwareScrollView>
             <View style={styles.container}>
-                <StatusBar hidden={true}/>
+                <StatusBar hidden={true} />
                 <View style={styles.imgHeaderContainer}>
-                    <Image source={require('../../../assest/images/background_login.png')} style={styles.imgHeader} />
+                    <Image source={require('../../assest/images/background_login.png')} style={styles.imgHeader} />
                 </View>
                 <View style={styles.wellcomeContainer}>
                     <Text style={styles.wellcomeText}>Chào mừng bạn</Text>
@@ -43,11 +60,11 @@ const Login = (props) => {
                         hidePassword={true}
                         style={{ marginTop: 10 }}
                     />
-                    {loginFailed && <Text style={styles.txtLoginFailed}>Invalid email or Password . Try Again !</Text>}
+                    {loginFailed && <Text style={styles.txtLoginFailed}>{logFailedLogin}</Text>}
                 </View>
                 <View style={styles.rememberMeContainer}>
                     <TouchableOpacity style={styles.rememnerMe} onPress={changeRemember}>
-                        <Image source={rememnerMe ? require('../../../assest/icons/isRemember.png') : require('../../../assest/icons/notRemember.png')}
+                        <Image source={rememnerMe ? require('../../assest/icons/isRemember.png') : require('../../assest/icons/notRemember.png')}
                             style={styles.icRemember} />
                         <Text style={[styles.rememberMeText, rememnerMe && { color: '#007537' }]}>Nhớ tài khoản</Text>
                     </TouchableOpacity>
@@ -59,7 +76,7 @@ const Login = (props) => {
                 <ButtonBig
                     style={{ paddingHorizontal: 30, marginTop: 25 }}
                     title="Đăng nhập"
-                    onPress={() => console.log('login click')}
+                    onPress={() => loginApi()}
                 />
 
                 <View style={styles.ortherContainer}>
@@ -70,11 +87,11 @@ const Login = (props) => {
 
                 <View style={styles.loginOtherContainer}>
                     <TouchableOpacity style={styles.btnGoogle}>
-                        <Image source={require('../../../assest/icons/google.png')}
+                        <Image source={require('../../assest/icons/google.png')}
                             style={styles.imgGoogle} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.btnFacebook}>
-                        <Image source={require('../../../assest/icons/facebook.png')}
+                        <Image source={require('../../assest/icons/facebook.png')}
                             style={styles.imgFacebook} />
                     </TouchableOpacity>
                 </View>
