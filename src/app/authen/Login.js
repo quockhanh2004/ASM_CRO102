@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, useWindowDimensions, StatusBar } from 'react-native'
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 
 import { AppContext } from '../main/AppContext';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -17,19 +17,35 @@ const Login = (props) => {
     const [rememnerMe, setRememberMe] = useState(false);
     const [loginFailed, setLoginFailed] = useState(false);
     const [logFailedLogin, setLogFailedLogin] = useState('');
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
+
+    const checkInput = () => {
+        let apply = true;
+
+        apply = emailRef.current?.check();
+        apply = passwordRef.current?.check();
+        console.log(apply);
+        return apply;
+    }
+
     const changeRemember = () => {
         setRememberMe(!rememnerMe);
     };
 
     const loginApi = async () => {
-        const response = await AxiosInstance().get('/users/login?email=' + email + '&&password=' + password);
-        console.log(response);
-        if (response.status === 200) {
-            if (response.user) setIsLogin(true);
-        } else {
-            setLoginFailed(true);
-            setLogFailedLogin(response.msg);
+
+        if (checkInput()) {
+            const response = await AxiosInstance().get('/users/login?email=' + email + '&&password=' + password);
+            console.log(response);
+            if (response.status === 200) {
+                if (response.user) setIsLogin(true);
+            } else {
+                setLoginFailed(true);
+                setLogFailedLogin(response.msg);
+            }
         }
+
     }
 
 
@@ -50,7 +66,8 @@ const Login = (props) => {
                         value={email}
                         placeholder="Email"
                         keyboardType="email-address"
-                        style={{ marginTop: 20 }}
+                        style={{ marginTop: 20, width: '100%' }}
+                        ref={emailRef}
                     />
                     <InputView
                         onTextChange={setPassword}
@@ -58,7 +75,8 @@ const Login = (props) => {
                         placeholder="Password"
                         keyboardType="default"
                         hidePassword={true}
-                        style={{ marginTop: 10 }}
+                        style={{ marginTop: 10, width: '100%' }}
+                        ref={passwordRef}
                     />
                     {loginFailed && <Text style={styles.txtLoginFailed}>{logFailedLogin}</Text>}
                 </View>

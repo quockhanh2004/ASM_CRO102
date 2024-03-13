@@ -7,7 +7,7 @@ export const AppProvider = (props) => {
     const [cart, setCart] = useState([]);
     const [history, setHistory] = useState([]);
     const [user, setUser] = useState({});
-    const [isLogin, setIsLogin] = useState(true);
+    const [isLogin, setIsLogin] = useState(false);
     return (
         <AppContext.Provider
             value={{ cart, setCart, isLogin, setIsLogin, history, setHistory, user, setUser }}>
