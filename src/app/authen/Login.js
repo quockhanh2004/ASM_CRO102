@@ -36,14 +36,15 @@ const Login = (props) => {
     const loginApi = async () => {
 
         if (checkInput()) {
-            const response = await AxiosInstance().get('/users/login?email=' + email + '&&password=' + password);
-            console.log(response);
-            if (response.status === 200) {
-                if (response.user) setIsLogin(true);
-            } else {
-                setLoginFailed(true);
-                setLogFailedLogin(response.msg);
-            }
+            // const response = await AxiosInstance().get('/users/login?email=' + email + '&&password=' + password);
+            // console.log(response);
+            // if (response.status === 200) {
+            //     if (response.user) setIsLogin(true);
+            // } else {
+            //     setLoginFailed(true);
+            //     setLogFailedLogin(response.msg);
+            // }
+            setIsLogin(true)
         }
 
     }

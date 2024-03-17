@@ -2,13 +2,23 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, StatusBar 
 import React, { useState } from 'react'
 import Show4Product from '../../multiComponent/Show4Product'
 
-const Home = (props) => {
+const data = [
+  { key: '1', name: 'Item 1' },
+  { key: '2', name: 'Item 2' },
+  { key: '3', name: 'Item 3' },
+  { key: '4', name: 'Item 4' },
+  { key: '5', name: 'Item 4' },
+  { key: '6', name: 'Item 4' },
+];
 
+const Home = (props) => {
+  const { navigation } = props
   return (
     <ScrollView>
-      <View style={styles.container}>
+      <View style={[styles.container]}>
         <StatusBar
           translucent
+          barStyle={'dark-content'}
           backgroundColor={'transparent'}
         />
         <View style={styles.header}>
@@ -17,8 +27,8 @@ const Home = (props) => {
           </View>
           <View style={styles.topHeader}>
             <Text style={styles.title}>Planta - toả sáng{`\n`}không gian nhà bạn</Text>
-            <TouchableOpacity style={styles.imgHeader}>
-              <Image source={require('../../../assest/icons/cart.png')} />
+            <TouchableOpacity style={styles.imgHeader} onPress={() => navigation.navigate('Cart')}>
+              <Image source={require('../../../assest/icons/cart.png')} style={{ width: 24, height: 24, margin: 11 }} />
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.newProduct}>
@@ -27,9 +37,23 @@ const Home = (props) => {
             </TouchableOpacity>
           </View>
         </View>
-        <Show4Product title={'Cây trồng'} style={{ marginTop: 15, paddingHorizontal: 25, }} />
-        <Show4Product title={'Chậu cây trồng'} style={{ marginTop: 15, paddingHorizontal: 25, }} />
-        <Show4Product title={'Phụ kiện'} style={{ marginTop: 15, paddingHorizontal: 25, }} />
+        <Show4Product
+          data={data}
+          title={'Cây trồng'}
+          quantityShow={4}
+          style={{ marginTop: 15, paddingHorizontal: 25, }}
+          onPressShowMore={() => navigation.navigate('Regular')}
+          txtShowMore={true}
+          navigation={navigation} />
+        <Show4Product
+          data={data}
+          quantityShow={4}
+          title={'Chậu cây trồng'} style={{ marginTop: 15, paddingHorizontal: 25, }} />
+        <Show4Product
+          data={data}
+          quantityShow={4}
+          navigation={navigation}
+          title={'Phụ kiện'} style={{ marginTop: 15, paddingHorizontal: 25, }} />
 
         <View style={styles.newComboContainer}>
           <Text style={styles.txtCombo}>Combo chăm sóc (mới)</Text>
@@ -50,7 +74,7 @@ const Home = (props) => {
 export default Home
 
 const styles = StyleSheet.create({
-  newComboContainer:{
+  newComboContainer: {
     width: '100%',
     paddingHorizontal: 25,
     paddingVertical: 10,
@@ -125,6 +149,10 @@ const styles = StyleSheet.create({
   },
   imgHeader: {
     position: 'absolute',
+    width: 48,
+    height: 46,
+    borderRadius: 24,
+    backgroundColor: '#fff',
     end: 0,
     top: 24,
     end: 25,

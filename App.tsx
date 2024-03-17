@@ -5,7 +5,7 @@ import AppNavigation from './src/app/AppNavigation'
 const App = () => {
   return (
     <AppProvider>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container]}>
         <StatusBar />
           <AppNavigation />
       </SafeAreaView>

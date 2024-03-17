@@ -1,16 +1,10 @@
 import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const data = [
-    { key: '1', name: 'Item 1' },
-    { key: '2', name: 'Item 2' },
-    { key: '3', name: 'Item 3' },
-    { key: '4', name: 'Item 4' },
-];
-
-const renderItems = () => {
+const RenderItems = ({ data, navigation }) => {
+    // console.log(data);
     return data.map(item => (
-        <TouchableOpacity key={item.key} style={styles.item}>
+        <TouchableOpacity key={item.key} style={styles.item} onPress={() => navigation.navigate('Panse', {product: item})}>
             <Image source={require('../../assest/images/imgProduct.png')}
                 style={styles.imgProduct}
                 resizeMode='contain' />
@@ -20,10 +14,12 @@ const renderItems = () => {
         </TouchableOpacity>
     ));
 };
-const ItemProduct = (props) => {
+const ItemProduct = ({data, navigation}) => {
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            {renderItems()}
+            <RenderItems
+                data={data}
+                navigation={navigation} />
         </ScrollView>
     )
 }
@@ -31,7 +27,7 @@ const ItemProduct = (props) => {
 export default ItemProduct
 
 const styles = StyleSheet.create({
-    txtPrice:{
+    txtPrice: {
         color: '#007537',
         fontWeight: '500',
         fontFamily: 'Lato',

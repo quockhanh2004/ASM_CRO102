@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import ItemProduct from './ItemProduct';
 
 const Show4Product = (props) => {
@@ -7,16 +7,32 @@ const Show4Product = (props) => {
         navigation,
         title,
         style,
-        showMore
+        showMore,
+        onPressShowMore,
+        txtShowMore,
+        quantityShow,
     } = props;
+
+    const [dataShow, setdataShow] = useState([])
+
+    useEffect(() => {
+        if (!!quantityShow) {
+            setdataShow(data.slice(0, quantityShow));
+        } else {
+            setdataShow(data);
+        }
+    }, [data, quantityShow]);
+
     return (
         <View style={[styles.container, style]}>
             <Text style={styles.title}>{title}</Text>
-            <ItemProduct />
-            <View style={styles.showMore}>
+            <ItemProduct
+            navigation={navigation}
+            data={dataShow} />
+            {txtShowMore && <TouchableOpacity style={styles.showMore} onPress={onPressShowMore} >
                 <Text style={styles.txtShowMore}>Xem thêm {title}</Text>
-            </View>
-            
+            </TouchableOpacity>}
+
         </View>
     )
 }
@@ -24,7 +40,7 @@ const Show4Product = (props) => {
 export default Show4Product
 
 const styles = StyleSheet.create({
-    txtShowMore:{
+    txtShowMore: {
         color: '#221F1F',
         textAlign: 'right',
         fontWeight: '500',
@@ -34,7 +50,7 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
 
     },
-    showMore:{
+    showMore: {
         width: '100%',
     },
     title: {
